@@ -1,11 +1,13 @@
 import os
 from flask import Flask
+from flaskr.db import get_db, init_db
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
+    
     app.config.from_mapping(
         SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite')
+        SQLALCHEMY_DATABASE_URI=get_db()
     )
     
     if test_config is None:
@@ -28,4 +30,12 @@ def create_app(test_config=None):
     from . import contratos
     app.register_blueprint(contratos.bp)
     
+    init_db(app)
+    
+    # # Remuevo la session una vez que la apliación se pare
+    # @app.teardown_appcontext
+    # def shutdown_session(exception=None):
+    #     print('Apagando...')
+    #     db_session.remove()
+        
     return app

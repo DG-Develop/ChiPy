@@ -1,9 +1,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Float, DateTime, Boolean
-from sqlalchemy.orm import registry, relationship
+from sqlalchemy.orm import relationship
 
-mapper_registry=registry()
-
-Base = mapper_registry.generate_base()
+from flaskr.db import Base
 
 class Contrato(Base):
     __tablename__ = 'Tbl_Contrato'
@@ -25,4 +23,11 @@ class Contrato(Base):
     escaneado=Column(Boolean, nullable=False)
     version_contrato=Column(String(100))
     fecha_cierre=Column(DateTime, nullable=False)
+    
+    def __init__(self, folio=None, puesto=None):
+        self.folio = folio
+        self.puesto = puesto
+
+    def __repr__(self):
+        return f'<Contrato {self.folio!r}>'
 
