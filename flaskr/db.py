@@ -4,7 +4,7 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from flask_sqlalchemy import SQLAlchemy
 
-db=SQLAlchemy()
+database=SQLAlchemy()
 
 def get_db():
     
@@ -39,4 +39,4 @@ def get_db():
 def init_db(app):
     # import flaskr.models
     # Base.metadata.create_all(bind=engine)
-    db.init_app(app)
+    database.init_app(app)

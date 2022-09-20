@@ -1,9 +1,9 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Float, DateTime, Boolean
 from sqlalchemy.orm import relationship
 
-from flaskr.db import Base
+from flaskr.db import database
 
-class Contrato(Base):
+class Contrato(database.Model):
     __tablename__ = 'Tbl_Contrato'
     
     id_contrato=Column(Integer, primary_key=True, nullable=False)

@@ -5,8 +5,11 @@ from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for, jsonify
 )
 
+from flaskr.db import database
+
 # from flaskr.db import get_db
-from flaskr.models import Contrato
+# from flaskr.models import Contrato
+import flaskr.models as M
 
 # from flaskr import models
 
@@ -24,10 +27,12 @@ def get_contratos():
         # contratos = result.all()
         # contratos=result.first()
 
-    contratos=Contrato.query.all()
+    # contratos = database.session.execute(select(Contrato).where(Contrato.folio=='SAFIN-022-013')).all()
+    contratos = M.Contrato.query().get(5)
+    
     # print(contratos)
-    results = [tuple(row) for row in contratos]
+    # results = [tuple(row) for row in contratos]
 
-    json_string = json.dumps(results, indent=4, sort_keys=True, default=str)
+    # json_string = json.dumps(results, indent=4, sort_keys=True, default=str)
 
-    return json_string
+    return contratos
