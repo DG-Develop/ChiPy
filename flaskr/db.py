@@ -6,22 +6,22 @@ from flask_sqlalchemy import SQLAlchemy
 
 database=SQLAlchemy()
 
-def get_db():
+# def get_db():
     
-    server = "172.19.2.31"
-    database = "Contratos"
-    user = "gdavid"
-    pwd = "David2021"
+#     server = "172.19.2.31"
+#     database = "Contratos"
+#     user = "gdavid"
+#     pwd = "David2021"
 
-    cstr = 'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + \
-        server + ';DATABASE=' + database + ';UID=' + user + ';PWD=' + pwd
+#     cstr = 'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + \
+#         server + ';DATABASE=' + database + ';UID=' + user + ';PWD=' + pwd
         
-    connection_url = URL.create("mssql+pyodbc", query={"odbc_connect": cstr})
+#     connection_url = URL.create("mssql+pyodbc", query={"odbc_connect": cstr})
         
-        # engine=create_engine(connection_url)
-        # g.db=engine
+#         # engine=create_engine(connection_url)
+#         # g.db=engine
         
-    return connection_url
+#     return connection_url
 # g.db=engine
 
 # db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))

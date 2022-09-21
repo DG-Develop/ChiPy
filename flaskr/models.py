@@ -24,10 +24,4 @@ class Contrato(database.Model):
     version_contrato=Column(String(100))
     fecha_cierre=Column(DateTime, nullable=False)
     
-    def __init__(self, folio=None, puesto=None):
-        self.folio = folio
-        self.puesto = puesto
-
-    def __repr__(self):
-        return f'<Contrato {self.folio!r}>'
 

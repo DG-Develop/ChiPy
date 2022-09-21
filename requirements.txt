@@ -3,3 +3,5 @@ Flask-SQLAlchemy
 pyodbc 
 pandas
 xlrd
+flask-marshmallow 
+marshmallow-sqlalchemy
