@@ -5,3 +5,4 @@ pandas
 xlrd
 flask-marshmallow 
 marshmallow-sqlalchemy
+iteration_utilities
