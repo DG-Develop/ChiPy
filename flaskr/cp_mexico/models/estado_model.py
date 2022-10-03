@@ -9,6 +9,10 @@ class Estado(db.Model):
     nombre_estado = Column(Integer, nullable=False)
     clave_estado = Column(String(3), nullable=False)
     
+    def __init__(self, nombre_estado, clave_estado):
+        self.nombre_estado = nombre_estado
+        self.clave_estado = clave_estado
+    
 
 class EstadoSchema(ma.Schema):
     class Meta:

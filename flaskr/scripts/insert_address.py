@@ -3,11 +3,17 @@ import numpy as np
 from iteration_utilities import unique_everseen
 
 # Cargo una lista de dataframes por cada hoja en el archivo
-dataframes = pd.read_excel('static/excel/CPdescarga.xls', sheet_name=None)
+dataframes = pd.read_excel(
+    'static/excel/CPdescarga.xls',
+    sheet_name=None,
+    converters={'d_codigo': str, 'd_CP': str, 'c_estado': str, 'c_oficina': str,
+                'c_tipo_asenta': str, 'c_mnpio': str, 'id_asenta_cpcons': str, 'c_cve_ciudad': str}
+)
 
 
 def get_estados_excel():
-    estados = set()
+    # estados = set()
+    estados = []
 
     # Recorro cada uno de los sheets
     for key in dataframes:
@@ -15,25 +21,31 @@ def get_estados_excel():
             continue
 
         dt = dataframes[key]
-        estados_dt = dt['d_estado'].unique()
 
-        estados.update(estados_dt)
+        for _, row in dt.iterrows():
+            estado = row['d_estado']
+            clave_estado = row['c_estado']
+            estados.append({"estado": estado, "clave_estado": clave_estado})
+        # estados_dt = dt['d_estado'].unique()
 
-    return sorted(estados)
+        # estados.update(estados_dt)
+
+    # return sorted(estados)
+    return list(unique_everseen(estados))
 
 
 def get_ciudades_excel():
     ciudades = set()
-    
+
     for key in dataframes:
         if key == 'Nota':
             continue
-        
+
         dt = dataframes[key]
         ciudades_dt = dt['d_ciudad'].unique()
-        
+
         ciudades.update(ciudades_dt)
-        
+
     return sorted(ciudades)
 
 
@@ -45,7 +57,7 @@ def get_municipios_excel():
             continue
 
         dt = dataframes[key]
-        
+
         for _, row in dt.iterrows():
             municipio = row['D_mnpio']
             estado = row['d_estado']
@@ -56,13 +68,13 @@ def get_municipios_excel():
 
 def get_asentamientos_excel():
     asentamientos = []
-    
+
     for key in dataframes:
         if key == 'Nota':
             continue
-        
+
         dt = dataframes[key]
-        
+
         for _, row in dt.iterrows():
             codigo_postal = row['d_codigo']
             asentamiento = row['d_asenta']
@@ -72,7 +84,7 @@ def get_asentamientos_excel():
             descripcion_zona = row['d_zona']
             municipio = row['D_mnpio']
             ciudad = row['d_ciudad']
-            
+
             asentamientos.append({
                 "codigo_postal": codigo_postal,
                 "nombre_asentamiento": asentamiento,
@@ -83,5 +95,5 @@ def get_asentamientos_excel():
                 "municipio": municipio,
                 "ciudad": ciudad
             })
-            
-    return list(unique_everseen(asentamientos))
+
+    return asentamientos
