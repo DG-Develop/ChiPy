@@ -13,6 +13,11 @@ class Municipio(db.Model):
     
     estado = relationship("Estado")
     
+    def __init__(self, id_estado, nombre_municipio, clave_municipio):
+        self.id_estado = id_estado
+        self.nombre_municipio = nombre_municipio
+        self.clave_municipio = clave_municipio
+    
 class MunicipioSchema(ma.Schema):
     class Meta:
         fields = ('id_municipio', 'id_estado', 'nombre_municipio', 'clave_municipio', 'estado')

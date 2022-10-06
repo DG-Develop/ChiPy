@@ -61,7 +61,8 @@ def get_municipios_excel():
         for _, row in dt.iterrows():
             municipio = row['D_mnpio']
             estado = row['d_estado']
-            municipios.append({"municipio": municipio, "estado": estado})
+            clave_municipio = row['c_mnpio']
+            municipios.append({"municipio": municipio, "estado": estado, "clave_municipio": clave_municipio})
 
     return list(unique_everseen(municipios))
 

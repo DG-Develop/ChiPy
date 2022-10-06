@@ -6,12 +6,11 @@ from flaskr.cp_mexico.models.ciudad_model import Ciudad
 from flaskr.cp_mexico.models.estado_model import Estado
 from flaskr.cp_mexico.models.municipio_model import Municipio
 
-from flaskr.cp_mexico import estado_schema, estados_schema, municipios_schema, ciudades_schema, asentamientos_schema
-from flaskr.scripts.insert_address import get_asentamientos_excel, get_estados_excel, get_municipios_excel
-
-from flaskr.cp_mexico.db.sql_server import db
+from flaskr.cp_mexico import estados_schema, municipios_schema, ciudades_schema, asentamientos_schema
+from flaskr.cp_mexico.repositories.direcciones_repository import DireccionRepository
 
 bp = Blueprint('cp_mexico', __name__, url_prefix='/api')
+direccion_repository = DireccionRepository()
 
 @bp.get('/estados')
 def get_estados():
@@ -43,23 +42,14 @@ def get_asentamientos():
 
 @bp.get('/actualizacion-base')
 def actualizar_base():
-    estados = get_estados_excel()
-    estados_creados = []
     
-    for estado_dict in estados:
-        estado_encontrado = Estado.query.filter_by(nombre_estado=estado_dict["estado"]).first()
-        
-        if estado_encontrado is None:
-            estado = Estado(estado_dict['estado'], estado_dict['clave_estado'])
-            db.session.add(estado)
-            db.session.commit()
-            db.session.refresh(estado)
-            estados_creados.append(estado_schema.dump(estado))
+    estados = direccion_repository.InsertarEstados()
+    municipios = direccion_repository.InsertarMuncipios()
             
-    # db.session.bulk_save_objects()
+    # db.session.bulk_save_objects() 
     
     # municipios = get_municipios_excel()
     # ciudades = get_estados_excel()
     # asentamientos = get_asentamientos_excel()
     
-    return estados_creados
+    return municipios
