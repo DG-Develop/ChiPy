@@ -1,6 +1,8 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from flaskr.cp_mexico.db.sql_server import db, ma
+from marshmallow import fields
+from flaskr.cp_mexico.models.estado_model import EstadoSchema
 
 class Municipio(db.Model):
     __tablename__ = 'Municipios'
@@ -19,5 +21,6 @@ class Municipio(db.Model):
         self.clave_municipio = clave_municipio
     
 class MunicipioSchema(ma.Schema):
+    estado = fields.Nested(EstadoSchema)
     class Meta:
-        fields = ('id_municipio', 'id_estado', 'nombre_municipio', 'clave_municipio', 'estado')
+        fields = ('id_municipio', 'id_estado', 'nombre_municipio', 'clave_municipio','estado')

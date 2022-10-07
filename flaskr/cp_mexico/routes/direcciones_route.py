@@ -43,13 +43,9 @@ def get_asentamientos():
 @bp.get('/actualizacion-base')
 def actualizar_base():
     
-    estados = direccion_repository.InsertarEstados()
-    municipios = direccion_repository.InsertarMuncipios()
-            
-    # db.session.bulk_save_objects() 
+    # estados = direccion_repository.InsertarEstados()
+    # municipios = direccion_repository.InsertarMuncipios()
+    # ciudades = direccion_repository.InsertarCiudades()        
+    asentamientos = direccion_repository.InsertarAsentamientos()
     
-    # municipios = get_municipios_excel()
-    # ciudades = get_estados_excel()
-    # asentamientos = get_asentamientos_excel()
-    
-    return municipios
+    return asentamientos
