@@ -1,4 +1,3 @@
-from cmath import isnan
 from flaskr.cp_mexico.models.asentamiento_model import Asentamiento
 from flaskr.cp_mexico.models.estado_model import Estado
 from flaskr.cp_mexico.models.municipio_model import Municipio

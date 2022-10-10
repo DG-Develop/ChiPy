@@ -1,15 +1,16 @@
 
-from flask import jsonify
+from flask import request
 from flask import Blueprint
 
-from flaskr.contratos.models.contrato_model import Contrato
-from flaskr.contratos import contrato_schema, contratos_schema
+from flaskr.contratos.repositories.contratos_respository import ContratoRepository
 
 bp = Blueprint('contratos', __name__, url_prefix='/api')
 
+contrato_repository = ContratoRepository()
+
 @bp.get('/contratos')
 def get_contratos():
-    all_contratos = Contrato.query.all()
-    result = contratos_schema.dump(all_contratos)
+    folio = request.args['folio']
+    contratos = contrato_repository.ObtenerContratos(folio=folio)
     
-    return jsonify(result)
+    return contratos
