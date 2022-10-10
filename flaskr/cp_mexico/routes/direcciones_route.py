@@ -2,11 +2,10 @@ from flask import jsonify
 from flask import Blueprint
 
 from flaskr.cp_mexico.models.asentamiento_model import Asentamiento
-from flaskr.cp_mexico.models.ciudad_model import Ciudad
 from flaskr.cp_mexico.models.estado_model import Estado
 from flaskr.cp_mexico.models.municipio_model import Municipio
 
-from flaskr.cp_mexico import estados_schema, municipios_schema, ciudades_schema, asentamientos_schema
+from flaskr.cp_mexico import estados_schema, municipios_schema, asentamientos_schema
 from flaskr.cp_mexico.repositories.direcciones_repository import DireccionRepository
 
 bp = Blueprint('cp_mexico', __name__, url_prefix='/api')
@@ -26,12 +25,6 @@ def get_municipios():
     
     return jsonify(result)
 
-@bp.get('/ciudades')
-def get_ciudades():
-    all_ciudades = Ciudad.query.all()
-    result = ciudades_schema.dump(all_ciudades)
-    
-    return jsonify(result)
 
 @bp.get('/asentamientos')
 def get_asentamientos():
@@ -45,7 +38,6 @@ def actualizar_base():
     
     # estados = direccion_repository.InsertarEstados()
     # municipios = direccion_repository.InsertarMuncipios()
-    # ciudades = direccion_repository.InsertarCiudades()        
     asentamientos = direccion_repository.InsertarAsentamientos()
     
     return asentamientos

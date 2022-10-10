@@ -89,13 +89,13 @@ def get_asentamientos_excel():
             asentamiento = row['d_asenta']
             tipo_asentamiento = row['d_tipo_asenta']
             c_tipo_asenta = row['c_tipo_asenta']
+            ciudad = row['d_ciudad']
+            clave_ciudad = row['c_cve_ciudad']
             id_asentamiento = row['id_asenta_cpcons']
             descripcion_zona = row['d_zona']
             estado = row['d_estado']
             municipio = row['D_mnpio']
             clave_municipio = row['c_mnpio']
-            ciudad = row['d_ciudad']
-            clave_ciudad = row['c_cve_ciudad']
 
             asentamientos.append({
                 "codigo_postal": codigo_postal,
@@ -107,8 +107,8 @@ def get_asentamientos_excel():
                 "estado": estado,
                 "municipio": municipio,
                 "clave_municipio": clave_municipio,
-                "ciudad": ciudad if type(ciudad) == float and isnan(ciudad) else "",
-                "clave_ciudad": clave_ciudad if type(clave_ciudad) == float and isnan(clave_ciudad) else ""
+                "ciudad": "" if type(ciudad) == float and isnan(ciudad) else ciudad,
+                "clave_ciudad": "" if type(clave_ciudad) == float and isnan(clave_ciudad) else clave_ciudad
             })
 
     return asentamientos
