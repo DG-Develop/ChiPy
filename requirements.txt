@@ -6,3 +6,5 @@ xlrd
 flask-marshmallow 
 marshmallow-sqlalchemy
 iteration_utilities
+requests
+beautifulsoup4
