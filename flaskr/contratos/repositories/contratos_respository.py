@@ -14,3 +14,8 @@ class ContratoRepository:
         result = contratos_schema.dump(all_contratos)
         
         return jsonify(result)
+    
+    def ObtenerTop5Contratos(self):
+        pass
+    
+    
