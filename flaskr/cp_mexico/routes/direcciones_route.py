@@ -33,11 +33,17 @@ def get_asentamientos():
     
     return jsonify(result)
 
-@bp.get('/actualizacion-base')
-def actualizar_base():
-    
-    # estados = direccion_repository.InsertarEstados()
-    # municipios = direccion_repository.InsertarMuncipios()
+@bp.get('/actualizacion-base-estados')
+def actualizar_base_estados():
+    estados = direccion_repository.InsertarEstados()    
+    return estados
+
+@bp.get('/actualizacion-base-municipios')
+def actualizar_base_municipios():
+    municipios = direccion_repository.InsertarMuncipios()
+    return municipios
+
+@bp.get('/actualizacion-base-asentamientos')
+def actualizar_base_asentamientos():
     asentamientos = direccion_repository.InsertarAsentamientos()
-    
     return asentamientos

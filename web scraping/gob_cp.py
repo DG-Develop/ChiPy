@@ -1,19 +1,20 @@
+from os import remove
 import requests
-import shutil
 from bs4 import BeautifulSoup
+from zipfile import ZipFile
 
 # Web Scraping
-base_url = 'https://www.correosdemexico.gob.mx'
+
+## Get website content
 url = 'https://www.correosdemexico.gob.mx/SSLServicios/ConsultaCP/CodigoPostal_Exportar.aspx'
-
 content_data = requests.get(url, allow_redirects=True)
-
 soup = BeautifulSoup(content_data.content, 'html.parser')
 
 view_state = soup.find(id='__VIEWSTATE')
 event_validation = soup.find(id='__EVENTVALIDATION')
 
-params = {
+## Generate de data to form request 
+payload = {
     '__EVENTTARGET': '',
     '__EVENTARGUMENT': '',
     '__LASTFOCUS': '',
@@ -26,11 +27,17 @@ params = {
     'btnDescarga.y': '5'
 }
 
+## Downloading postal codes from SEPOMEX
+response = requests.post(url=url, data=payload)
 
-# file_zip = requests.post(url,json=params, stream=True, allow_redirects=True)
+zip_path = 'static/excel/CPdescargaxls.zip'
 
+## Writing zip
+open(zip_path, 'wb').write(response.content)
 
-# print(file_zip.headers)
+## Extracting zip
+with ZipFile(zip_path, 'r') as zipObj:
+    zipObj.extractall(path='static/excel')
 
-# with open('CPdescargaxls.zip', 'wb') as out_file:
-#     shutil.copyfile(file_zip.raw, out_file)
+## Remove zip
+remove(zip_path)
