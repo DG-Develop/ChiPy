@@ -1,5 +1,4 @@
 import hashlib
-
 from difflib import SequenceMatcher
 
 

@@ -14,3 +14,9 @@ def get_contratos():
     contratos = contrato_repository.ObtenerContratos(folio=folio)
     
     return contratos
+
+@bp.get('/contratos/dependencia-cantidad')
+def obtener_contratos_por_cantidad_dependencia():
+    contratos = contrato_repository.ObtenerCantidadContratosPorDependencia()
+    
+    return contratos

@@ -1,5 +1,8 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Float, DateTime, Boolean
+from sqlalchemy.orm import relationship
 from flaskr.contratos.db.sql_server import db, ma
+from marshmallow import fields
+from flaskr.contratos.models.dependencia_model import DependenciaSchema
 
 class Contrato(db.Model):
     __tablename__ = 'Tbl_Contrato'
@@ -12,7 +15,7 @@ class Contrato(db.Model):
     fecha_termino=Column(DateTime, nullable=False)
     fecha_nombramiento=Column(DateTime, nullable=False)
     tipo_contrato=Column(String(100))
-    id_dependencia=Column(Integer, nullable=False)
+    id_dependencia=Column(Integer, ForeignKey('Dependencia.id_dependencia'), nullable=False)
     creado=Column(DateTime, nullable=False)
     id_empleado=Column(Integer, nullable=False)
     clave=Column(String(20))
@@ -21,6 +24,8 @@ class Contrato(db.Model):
     escaneado=Column(Boolean, nullable=False)
     version_contrato=Column(String(100))
     fecha_cierre=Column(DateTime, nullable=False)
+    
+    dependencia = relationship("Dependencia")
     
     def __init__(self, folio, puesto, importe_sdo, fecha_ini, fecha_termino, fecha_nombramiento, tipo_contrato, id_dependencia, creado, id_empleado, clave, numero_oficio, activo, escaneado, version_contrato, fecha_cierre):
         self.folio = folio
@@ -42,5 +47,6 @@ class Contrato(db.Model):
         
 
 class ContratoSchema(ma.Schema):
+    dependencia = fields.Nested(DependenciaSchema)
     class Meta:
-        fields = ('folio', 'puesto', 'importe_sdo', 'fecha_ini', 'fecha_termino', 'fecha_nombramiento', 'tipo_contrato', 'id_dependencia', 'creado', 'id_empleado', 'clave', 'numero_oficio', 'activo', 'escaneado', 'version_contrato', 'fecha_cierre')
+        fields = ('folio', 'puesto', 'importe_sdo', 'fecha_ini', 'fecha_termino', 'fecha_nombramiento', 'tipo_contrato', 'id_dependencia', 'creado', 'id_empleado', 'clave', 'numero_oficio', 'activo', 'escaneado', 'version_contrato', 'fecha_cierre', 'dependencia')
