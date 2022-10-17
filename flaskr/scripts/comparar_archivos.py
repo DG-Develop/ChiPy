@@ -22,7 +22,7 @@ def hash_file(filename1, filename2):
     return h1.hexdigest(), h2.hexdigest()
 
 
-msg1, msg2 = hash_file('static/pdf/SALUD-022-033.pdf', 'static/pdf/SALUD-022-033 - copia.pdf')
+msg1, msg2 = hash_file('static/pdf/SAFIN-022-067.pdf', 'static/pdf/SAFIN-022-067 escaneado.pdf')
 
 if msg1 != msg2:
     print('Estos archivos no son identicos')

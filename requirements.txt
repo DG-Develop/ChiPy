@@ -9,3 +9,6 @@ iteration_utilities
 requests
 beautifulsoup4
 pdf2image
+imutils 
+opencv-python
+pytesseract
