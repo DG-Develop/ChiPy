@@ -32,6 +32,7 @@ for i in range(numero_pagina_actual):
 from PIL import Image
 from pytesseract import pytesseract
 
+# No olvidar el .exe de tesseract para windows y en la ruta especificada
 path_to_tesseract = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 image_path = 'process/actual-page0.png'
 
