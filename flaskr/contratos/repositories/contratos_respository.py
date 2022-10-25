@@ -1,8 +1,9 @@
 from datetime import date
 from flask import jsonify
 from flaskr.contratos.models.contrato_model import Contrato
-from flaskr.contratos import contrato_schema, contratos_schema
-from sqlalchemy import extract, join, select
+from flaskr.contratos import contrato_schema, contratos_schema, dependencia_contrato_scheama
+from sqlalchemy import extract
+from sqlalchemy.orm import contains_eager
 
 from flaskr.contratos.models.dependencia_model import Dependencia
 
@@ -23,13 +24,17 @@ class ContratoRepository:
         pass
 
     def ObtenerCantidadContratosPorDependencia(self):
-        contratos = Contrato.query.filter(
-            extract('year', Contrato.fecha_ini) == 2022)
+        # contratos = Contrato.query.filter(
+        #     extract('year', Contrato.fecha_ini) == 2022)
+        
+        dependencias = Dependencia.query.join(Contrato).filter(
+            extract('year', Contrato.fecha_ini) == 2022
+        )
 
         # j = join(Contrato, Dependencia, Contrato.id_dependencia == Dependencia.id_dependencia)
 
         # stmt = select(Contrato).select_from(j)
 
-        result = contratos_schema.dump(contratos)
+        result = dependencia_contrato_scheama.dump(dependencias)
 
         return jsonify(result)

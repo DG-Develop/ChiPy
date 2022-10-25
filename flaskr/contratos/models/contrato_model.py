@@ -1,3 +1,4 @@
+from itertools import count
 from sqlalchemy import Column, Integer, String, ForeignKey, Float, DateTime, Boolean
 from sqlalchemy.orm import relationship
 from flaskr.contratos.db.sql_server import db, ma
@@ -50,3 +51,7 @@ class ContratoSchema(ma.Schema):
     dependencia = fields.Nested(DependenciaSchema)
     class Meta:
         fields = ('folio', 'puesto', 'importe_sdo', 'fecha_ini', 'fecha_termino', 'fecha_nombramiento', 'tipo_contrato', 'id_dependencia', 'creado', 'id_empleado', 'clave', 'numero_oficio', 'activo', 'escaneado', 'version_contrato', 'fecha_cierre', 'dependencia')
+        
+class ContratoDepencendiaSchema(ma.Schema):
+    class Meta:
+        fields = ('id_contrato','folio')
