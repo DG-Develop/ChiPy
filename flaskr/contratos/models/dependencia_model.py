@@ -28,6 +28,7 @@ class DependenciaSchema(ma.Schema):
         fields= ('id_dependencia', 'nombre_dependencia', 'fundamento_legal', 'direccion_dependencia', 'creado', 'activo', 'genero', 'part', 'esDesconcentrado', 'rfc', 'tipo_dependencia')
 
 class DependenciaNombreSchema(ma.Schema):
-    contratos = fields.Nested('ContratoSchema', many=True, only=['folio'])
+    contratos = fields.Nested('ContratoDepencendiaSchema', many=True, only=['count'])
+    count = fields.Function(lambda obj: len(obj.contratos))
     class Meta:
-        fields= ('nombre_dependencia', 'contratos')
+        fields= ('nombre_dependencia', 'count')

@@ -1,9 +1,9 @@
-from datetime import date
 from flask import jsonify
 from flaskr.contratos.models.contrato_model import Contrato
-from flaskr.contratos import contrato_schema, contratos_schema, dependencia_contrato_scheama
+from flaskr.contratos import contratos_schema, dependencia_contrato_scheama
 from sqlalchemy import extract
-from sqlalchemy.orm import contains_eager
+import matplotlib.pyplot as plt
+import numpy as np
 
 from flaskr.contratos.models.dependencia_model import Dependencia
 
@@ -24,17 +24,28 @@ class ContratoRepository:
         pass
 
     def ObtenerCantidadContratosPorDependencia(self):
-        # contratos = Contrato.query.filter(
-        #     extract('year', Contrato.fecha_ini) == 2022)
-        
         dependencias = Dependencia.query.join(Contrato).filter(
             extract('year', Contrato.fecha_ini) == 2022
         )
 
-        # j = join(Contrato, Dependencia, Contrato.id_dependencia == Dependencia.id_dependencia)
+        lista_dependencia = dependencia_contrato_scheama.dump(dependencias)
+        
+        lista_dependencia.sort(key=lambda x: x['count'], reverse=True)
+        
+        # plt.style.use('_mpl-gallery')
+        
+        # make data:
+        names = [d['nombre_dependencia'][0:3] for d in lista_dependencia]
+        values = [d['count'] for d in lista_dependencia]
+        
+        # plot
+        fig, ax = plt.subplots()
 
-        # stmt = select(Contrato).select_from(j)
+        ax.bar(names, values, width=1, edgecolor="white", linewidth=0.7)
 
-        result = dependencia_contrato_scheama.dump(dependencias)
+        # ax.set(xlim=(0, len(lista_dependencia)), xticks=np.arange(0, len(lista_dependencia)),
+        #     ylim=(0, 200), yticks=np.arange(1, 200))
 
-        return jsonify(result)
+        plt.show()
+        
+        return jsonify(lista_dependencia)
