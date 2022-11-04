@@ -32,20 +32,18 @@ class ContratoRepository:
         
         lista_dependencia.sort(key=lambda x: x['count'], reverse=True)
         
-        # plt.style.use('_mpl-gallery')
-        
         # make data:
-        names = [d['nombre_dependencia'][0:3] for d in lista_dependencia]
-        values = [d['count'] for d in lista_dependencia]
+        # names = [d['nombre_dependencia'][0:3] for d in lista_dependencia]
+        # values = [d['count'] for d in lista_dependencia]
         
         # plot
-        fig, ax = plt.subplots()
+        # fig, ax = plt.subplots()
 
-        ax.bar(names, values, width=1, edgecolor="white", linewidth=0.7)
+        # ax.bar(names, values, width=1, edgecolor="white", linewidth=0.7)
 
         # ax.set(xlim=(0, len(lista_dependencia)), xticks=np.arange(0, len(lista_dependencia)),
         #     ylim=(0, 200), yticks=np.arange(1, 200))
 
-        plt.show()
+        # plt.show()
         
         return jsonify(lista_dependencia)
