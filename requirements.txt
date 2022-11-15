@@ -13,3 +13,4 @@ imutils
 opencv-python
 pytesseract
 matplotlib
+selenium
