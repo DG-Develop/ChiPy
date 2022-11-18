@@ -13,35 +13,63 @@ dataframes = pd.read_excel(
 data_process = {}
 curp_invalid = {}
 
+count_passed = 0
+count_invalid = 0
+
 for key in dataframes:
     i = 0    
     dt = dataframes[key]
 
     for _, row in dt.iterrows():
-        # if i > 40:
-        #     break
+        # if i < 100:
+        #     continue
+        
         curp = row['CURP']
         
         sleep(55)
-        data, not_passed = scrap_curp(curp)
         
-        for clave, valor in data.items():
-            if clave in data_process:
-                data_process[clave].append(valor)
-            else:
-                data_process.update({clave: [valor]})
-                
-        for clave, valor in not_passed.items():
+        # Validador
+        try:
+            data, not_passed = scrap_curp(curp)
             
-            if clave in curp_invalid:
-                curp_invalid[clave].append(valor)
-            else:
-                curp_invalid.update({clave: [valor]})
-        
-        print(curp_invalid)
-        
-        
-        i += 1
+            if len(data) > 0:
+                count_passed += 1
+            
+            if len(not_passed) > 0:
+                count_invalid += 1
+            
+            for clave, valor in data.items():
+                if clave in data_process:
+                    data_process[clave].append(valor)
+                else:
+                    data_process.update({clave: [valor]})
+                
+            for clave, valor in not_passed.items():
+                
+                if clave in curp_invalid:
+                    curp_invalid[clave].append(valor)
+                else:
+                    curp_invalid.update({clave: [valor]})
+                    
+            print("Pasados: " + str(count_passed))
+            print("Invalidos: " + str(count_invalid))
+            
+            i += 1
+        except Exception:
+            not_passed = {'curp': curp, 'observacion' : 'error selenium'}
+            
+            for clave, valor in not_passed.items():
+                if clave in curp_invalid:
+                    curp_invalid[clave].append(valor)
+                else:
+                    curp_invalid.update({clave: [valor]})
+                
+            print("Pasados: " + str(count_passed))
+            print("Invalidos: " + str(count_invalid))
+            
+            i += 1
+            
+            continue
 
 
 if len(data_process) != 0:
@@ -54,7 +82,7 @@ if len(data_process) != 0:
     writer.save()
     
 if len(curp_invalid) != 0:
-    print(curp_invalid)
+    # print(curp_invalid)
     df = pd.DataFrame(curp_invalid)
 
     writer = pd.ExcelWriter('static/excel/Curps Invalidos RENAPO.xlsx', engine='xlsxwriter')
