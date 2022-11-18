@@ -21,8 +21,8 @@ for key in dataframes:
     dt = dataframes[key]
 
     for _, row in dt.iterrows():
-        # if i < 100:
-        #     continue
+        if i > 100:
+            break
         
         curp = row['CURP']
         
@@ -57,6 +57,8 @@ for key in dataframes:
             i += 1
         except Exception:
             not_passed = {'curp': curp, 'observacion' : 'error selenium'}
+            
+            count_invalid += 1
             
             for clave, valor in not_passed.items():
                 if clave in curp_invalid:
