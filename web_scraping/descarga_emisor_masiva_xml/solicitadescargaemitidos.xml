@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"
+            xmlns:des="http://DescargaMasivaTerceros.sat.gob.mx">
+  <s:Header/>
+  <s:Body>
+    <des:SolicitaDescargaEmitidos>
+      <des:solicitud
+          FechaInicial=""
+          FechaFinal=""
+          RfcEmisor=""
+          RfcSolicitante=""
+          TipoSolicitud="CFDI">
+        <!-- Aquí se inyecta la firma (Signature) -->
+      </des:solicitud>
+    </des:SolicitaDescargaEmitidos>
+  </s:Body>
+</s:Envelope>

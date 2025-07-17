@@ -21,12 +21,12 @@ for key in dataframes:
     dt = dataframes[key]
 
     for _, row in dt.iterrows():
-        if i > 100:
-            break
+        # if i > 100:
+        #     break
         
         curp = row['CURP']
         
-        sleep(55)
+        # sleep(55)
         
         # Validador
         try:
